@@ -1,0 +1,8 @@
+csv_train.py
+__pycache__
+.DS_Store
+.inference.py
+training_set/mnist_test.csv
+training_set/mnist_train.csv
+training_set/mnist_train_small.csv
+__pycache__/Nerualnetwork.cpython-39.pyc

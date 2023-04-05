@@ -1,7 +1,6 @@
 import numpy as np
 import scipy.special
 
-
 class NerualNetwork():
     def __init__(self,inlayer_nodes, outlayer_nodes, hiddenlayer_nodes, learning_rate):
         self.inlayer_nodes = inlayer_nodes
@@ -15,8 +14,8 @@ class NerualNetwork():
         self.activity_func = lambda x:scipy.special.expit(x)
     
     def forward_spread(self,inputs):
-        inputs = np.array(inputs,ndmin=2).T
-        hiddenlayer_inputs = np.dot(self.inputweight, inputs)
+        inputs = np.array(inputs,ndmin=2)
+        hiddenlayer_inputs = np.dot(self.inputweight, inputs.T)
         hiddenlayer_outputs = self.activity_func(hiddenlayer_inputs)
         outlayer_inputs = np.dot(self.hiddenweight, hiddenlayer_outputs)
         outlayer_outputs = self.activity_func(outlayer_inputs)
@@ -31,10 +30,9 @@ class NerualNetwork():
     
     def gradintdecrease(self, inlayer, hiddenlayer_errors, output_errors, hiddenlayer_outputs, outlayer_outputs):
 
-        self.hiddenweight += self.lrt * np.dot((output_errors * outlayer_outputs * (1.0 - outlayer_outputs)),
-                                                np.transpose(hiddenlayer_outputs))
-        self.inputweight += self.lrt * np.dot((hiddenlayer_errors * hiddenlayer_outputs * (1.0 - hiddenlayer_outputs)),
-                                               np.transpose(inlayer))
+        self.hiddenweight += self.lrt * np.dot((output_errors * outlayer_outputs * (1.0 - outlayer_outputs)),np.transpose(hiddenlayer_outputs))
+        
+        self.inputweight += self.lrt * np.dot((hiddenlayer_errors * hiddenlayer_outputs * (1.0 - hiddenlayer_outputs)),inlayer)
 
     def show(self,inputs):
         inputs = np.array(inputs,ndmin=2).T
@@ -45,4 +43,6 @@ class NerualNetwork():
         final_inputs = np.dot(self.hiddenweight, hidden_outputs)
         final_outputs = self.activity_func(final_inputs)
 
-        return final_outputs
+        label_new = np.argmax(final_outputs)
+
+        print(label_new)
