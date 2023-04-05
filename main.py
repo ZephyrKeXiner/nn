@@ -2,10 +2,10 @@ import Nerualnetwork
 import numpy as np
 
 input_nodes = 784
-hidden_nodes =1000
+hidden_nodes =500
 output_nodes = 10
 learning_rate = 0.1
-epoches = 20
+epoches = 15
 
 data_file = open("training_set/mnist_train_small.csv","r")
 data_list = data_file.readlines()
@@ -36,6 +36,9 @@ for i in range(epoches):
 
 nn.hiddenweight = hiddenlayer_weight
 nn.inputweight = inlayer_weight
+
+np.save('hiddenlayer_weight.npy', hiddenlayer_weight)
+np.save('inlayer_weight.npy', inlayer_weight)
 
 test_data_file = open("training_set/mnist_test.csv","r")
 test_data_list = test_data_file.readlines()
